@@ -1,0 +1,27 @@
+FROM ubuntu:latest
+
+# Install Java 21
+RUN apt-get update && apt-get install -y openjdk-21-jdk curl wget git
+
+# Set environment variables for Java
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Create a volume for /home
+VOLUME /home
+
+# Set the working directory
+WORKDIR /home
+
+# Git the ATM-10 and server script, agree to EULA, allow execution of startup script. By running this file you agree to the EULA. 
+
+RUN cd /home && git clone https://github.com/AllTheMods/ATM-10 && git clone https://github.com/nickyg666/docker4minecraft
+RUN mv /home/docker4minecraft/startserver.sh /home/ATM-10
+RUN touch /home/ATM-10/eula.txt && echo eula=true > /home/ATM-10/eula.txt
+RUN chmod +x /home/ATM-10/startserver.sh
+
+# Set the entrypoint to run the allTheMods10 server
+
+ENTRYPOINT ["/home/ATM-10/startserver.sh"]
+
+# Don't forget to mount a volume to home!
