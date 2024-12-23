@@ -22,7 +22,7 @@ sudo docker cp /path/to/mods/folder 02ae(containerID)ff32:/home/
 
 if your mods aren't in a mods folder or you are adding individually, then do docker cp path/to/mod/mod.jar containerID:/home/mods
 
-# to spin up allthemods server:
+# to spin up allthemods(neoforge) server:
 
 
 sudo docker build -t yourATM10serverimagename .
@@ -33,3 +33,4 @@ If there is a newer version of neoforge used and I didn't update the script, let
 This is based on 12/22/24's 21.1.90 neoforge release; but it will pull updates from their github and unless the neoforge 
 version changes everything should work out fine.
 # you are responsible to copy the mods in from ATM-10! 
+it's pretty easy just use the curseforge client to get the clientside mods and copy that folder to the docker container like with the fabric server
