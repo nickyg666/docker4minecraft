@@ -25,12 +25,12 @@ if [ ! -d libraries ]; then
     if [ ! -f "$INSTALLER" ]; then
         echo "No Neoforge installer found, downloading now."
         if command -v wget >/dev/null 2>&1; then
-            echo "DEBUG: (wget) Downloading $FORGE_URL"
-            wget -O "$INSTALLER" "$FORGE_URL"
+            echo "DEBUG: (wget) Downloading $NEOFORGE_URL"
+            wget -O "$INSTALLER" "$NEOFORGE_URL"
         else
             if command -v curl >/dev/null 2>&1; then
-                echo "DEBUG: (curl) Downloading $FORGE_URL"
-                curl -o "$INSTALLER" -L "$FORGE_URL"
+                echo "DEBUG: (curl) Downloading $NEOFORGE_URL"
+                curl -o "$INSTALLER" -L "$NEOFORGE_URL"
             else
                 echo "Neither wget or curl were found on your system. Please install one and try again"
                 pause
