@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+
+# Install necessary packages
+
+RUN apt-get update && apt-get install -y openjdk-21-jdk curl nano
+
+# Set environment variables for Java
+
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Create a volume for /home
+
+VOLUME /home
+
+# Set the working directory
+
+WORKDIR /home
+
+RUN cd /home && curl -OJ https://meta.fabricmc.net/v2/versions/loader/1.21.4/0.16.9/1.0.1/server/jar && mv *.jar fab.jar && chmod +x fab.jar && touch eula.txt && echo eula=true > eula.txt
+
+# Set the entrypoint to run the Fabric server, don't forget to mount a volume to /home for persistence when running
+
+ENTRYPOINT ["/bin/bash", "-c", "java -Xmx10G -Xms10G -jar fab.jar nogui"]
