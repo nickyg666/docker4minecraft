@@ -32,3 +32,4 @@ sudo docker run -it -p preferred_host_port:25565 -v namedvolumeforpersistence:/h
 If there is a newer version of neoforge used and I didn't update the script, let me know via issues and I will.
 This is based on 12/22/24's 21.1.90 neoforge release; but it will pull updates from their github and unless the neoforge 
 version changes everything should work out fine.
+# you are responsible to copy the mods in from ATM-10! 
