@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+
+# Install necessary packages
+
+RUN apt-get update && apt-get install -y openjdk-21-jdk curl nano
+
+# Set environment variables for Java
+
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Create a volume for /home
+
+VOLUME /home
+
+# Set the working directory
+
+WORKDIR /home
+
+RUN cd /home && curl -OJ https://api.papermc.io/v2/projects/paper/versions/1.21.1/builds/132/downloads/paper-1.21.1-132.jar && mv *.jar paper.jar && chmod +x paper.jar && touch eula.txt && echo eula=true > eula.txt && mkdir /home/plugins && cd /home/plugins && curl -OJ https://hangarcdn.papermc.io/plugins/Multiverse/Multiverse-Core/versions/4.3.14/PAPER/multiverse-core-4.3.14.jar && curl -OJ https://hangarcdn.papermc.io/plugins/Multiverse/Multiverse-Portals/versions/4.2.3/PAPER/multiverse-portals-4.2.3.jar && curl -OJ https://hangarcdn.papermc.io/plugins/Multiverse/Multiverse-SignPortals/versions/4.3.0/PAPER/multiverse-signportals-4.3.0.jar && curl -OJ https://hangarcdn.papermc.io/plugins/Multiverse/Multiverse-Inventories/versions/4.2.6/PAPER/multiverse-inventories-4.2.6.jar && curl -OJ https://hangarcdn.papermc.io/plugins/EngineHub/WorldEdit/versions/7.3.10-beta-01/PAPER/worldedit-bukkit-7.3.10-beta-01.jar
+
+# Set the entrypoint to run the Paper server
+
+ENTRYPOINT ["/bin/bash", "-c", "java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar --nogui"]
